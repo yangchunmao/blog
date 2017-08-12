@@ -62,3 +62,29 @@ Spring boot 提供对于缓存的自动配置的支持，使得可以更加方�
 `cacheResolver` | 非 | 用于指定使用那个缓存解析器，需要实现`org.springframework.cache.interceptor.CacheResolver`接口来实现自己的缓存解析器
 
 [`SpEl`]:http://docs.spring.io/spring/docs/current/spring-framework-reference/html/cache.html#cache-spel-context
+
+- `@CachePut`: 配置在函数、类上，根据参数定义进行缓存，与`@Cacheable`参数相同，不同的是，它每次都会真调用函数，所有主要用于数据新增和修改操作上。
+- `@CacheEvict`: 配置在函数、类上，通过用在删除方法上，用来从缓存中异常数据，参数同`@Cacheable`,多了另2个参数
+  + `allEntries`: 非必须，默认为false。当true时，会移除所有数据
+  + `beforeInvocation`: 非必须，默认为false, 会在方法调用之后删除数据。反之为true。
+
+## 支持的缓存插拔框架
+
+- `JCacche`
+- `EhCache` `EhCache`是一个纯`Java`的进程内缓存框架，具有快速、精干等特点，是Hibernate中默认的`CacheProvider`
+- `Hazelcast` 一个高度可扩展的数据分发和集群平台，可用于实现分布式数据存储、数据缓存等
+- `Infinispan` 是一个开源的数据网格平台，支持`JSR-107`标准的分布式缓存框架
+- `Couchbase` Nosql数据库，前身是couchDB和memBase，对等网设计的，分布式缓存框架，整个集群没有单点失效，并且支持完全平行扩展。拥有专业的web管理界面，Restful API等
+- `Redis` 
+- `Caffeine` `java8`重写`Guava`的缓存，并将在`spring boot 2.0`中取代`Guava`的本地高效缓存
+- `Guava(deprecated)`
+- `Simple` 如果没有其他缓存`providers`, `spring boot`会通过`ConcurrentHashMap`作为缓存仓库
+- `None` 当配置`@EnableCacheing`,缓存开启；如何不希望缓存应用当前的环境，可以强制配置缓存类型为`none`,如
+        spring.cache.type=none
+
+
+## 支持`EhCache 2.x`, 步骤：
+
+- 添加`EhCache`依赖
+- 添加`ehcache.xml`配置文件，定义相关的缓存策略等
+- `spring.cache.ehcache.config=classpath:ehcache.xml`
