@@ -9,14 +9,14 @@ Spring boot 提供对于缓存的自动配置的支持，使得可以更加方�
 
 ## 引入缓存
 
-- 在`pom.xml`文件中添加相关`starters`依赖,`spring cache`是基于`JSR-107 API`标准的
+- 在`pom.xml`文件中添加相关`starters`依赖
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
-- 在`spring boot`主类中添加注解声明`@EnableCaching`开启缓存
+- 在`spring boot`主类中添加注解声明`@EnableCaching`开启缓存, 如何应用缓存的类不是基于接口方式，开启`proxyTargetClass`属性
 
         @EnableCaching
         @SpringBootApplication
@@ -88,3 +88,13 @@ Spring boot 提供对于缓存的自动配置的支持，使得可以更加方�
 - 添加`EhCache`依赖
 - 添加`ehcache.xml`配置文件，定义相关的缓存策略等
 - `spring.cache.ehcache.config=classpath:ehcache.xml`
+
+`Spring Framework`从3.1版本开始，支持通明缓存。到4.1版本，明确 的支持`JSR-107 annotations`标准。
+
+`buffer` 缓冲，作为快速和慢速实体之间的数据的中间临时存储。
+`cache` 缓存，允许快速的方式多次读取相同的数据。
+`Spring Framework cache`的抽象是通过`org.springframework.cache.Cache`和`org.springframework.cache.CacheManager`接口实现的。
+
+缓存的声明式应用，剔除了应用相关框架的紧耦合。
+
+JSR-107 是一种Cache标准
